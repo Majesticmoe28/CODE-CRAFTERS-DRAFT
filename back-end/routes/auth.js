@@ -1,23 +1,31 @@
 const express = require('express');
-const passport = require('passport');
-const jwt = require('jsonwebtoken');
-
 const router = express.Router();
+const passport = require('passport');
 
-// Google authentication
-router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+// Route for Google authentication
+router.get('/google', passport.authenticate('google', {
+  scope: ['profile', 'email']
+}));
 
-router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
-  const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-  res.redirect(`/dashboard?token=${token}`); // Send token to frontend
+// Callback route for Google authentication
+router.get('/google/callback', passport.authenticate('google', {
+  failureRedirect: '/'
+}), (req, res) => {
+  // Successful authentication, redirect home.
+  res.redirect('/authsuccess');
 });
 
-// Facebook authentication
-router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));
+// Route for Facebook authentication
+router.get('/facebook', passport.authenticate('facebook', {
+  scope: ['email']
+}));
 
-router.get('/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/' }), (req, res) => {
-  const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-  res.redirect(`/dashboard?token=${token}`); // Send token to frontend
+// Callback route for Facebook authentication
+router.get('/facebook/callback', passport.authenticate('facebook', {
+  failureRedirect: '/'
+}), (req, res) => {
+  // Successful authentication, redirect home.
+  res.redirect('/authsuccess');
 });
 
 module.exports = router;

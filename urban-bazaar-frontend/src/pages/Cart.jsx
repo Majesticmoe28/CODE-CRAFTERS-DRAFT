@@ -1,13 +1,13 @@
-import React from 'react';
-import { useState, useContext } from 'react';
-import { CartContext } from '../context/CartContext'; // Example: replace with your actual context import
+// src/pages/Cart.jsx
+import React, { useState, useContext } from 'react';
+import { CartContext } from '../Context/CartContext'; // Ensure this path is correct
 
 const Cart = () => {
-  const { cartItems, removeFromCart, clearCart } = useContext(CartContext); // Example: replace with your actual context methods
+  const { cart, removeFromCart, clearCart } = useContext(CartContext); // Use 'cart' instead of 'cartItems'
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   const getTotalPrice = () => {
-    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
   };
 
   const handleCheckout = () => {
@@ -18,12 +18,12 @@ const Cart = () => {
   return (
     <div className="max-w-3xl mx-auto p-6">
       <h1 className="text-2xl font-bold mb-4">Shopping Cart</h1>
-      {cartItems.length === 0 ? (
+      {cart.length === 0 ? ( // Use 'cart' instead of 'cartItems'
         <p>Your cart is empty.</p>
       ) : (
         <div>
           <ul className="space-y-4">
-            {cartItems.map((item) => (
+            {cart.map((item) => ( // Use 'cart' instead of 'cartItems'
               <li key={item.id} className="flex items-center justify-between p-4 border-b">
                 <div>
                   <h2 className="text-lg font-semibold">{item.name}</h2>
